@@ -25,3 +25,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+## Functions
+
+### Set the API Key in the Functions Environment
+
+`firebase functions:config:set openweatherapi.key="YOUR_OPEN_WEATHER_API_KEY"`
