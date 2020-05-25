@@ -1,0 +1,23 @@
+{
+  "name": "node-js-backend",
+  "version": "1.0.0",
+  "description": "A Node.js app using Express.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "publishheroku": "cd ../ && git subtree push --prefix backend heroku master || true"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "requestify": "^0.2.5"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ]
+}
