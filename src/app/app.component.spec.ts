@@ -1,15 +1,32 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
+import { LocalForecastComponent } from './local-forecast/local-forecast.component';
+import { HttpClient } from '@angular/common/http';
+import { asyncData } from 'testing/async-observable-helpers';
+import { ForecastResponse } from './models';
 
 describe('AppComponent', () => {
+  let httpSpy;
   beforeEach(async(() => {
+    httpSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    httpSpy.get.and.returnValue(asyncData({ city: { name: 'La Paz' } } as ForecastResponse))
+    spyOn(navigator.geolocation, "getCurrentPosition").and.callFake(function () {
+      var position = { coords: { latitude: 33, longitude: -26 } };
+      arguments[0](position);
+    });
+
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+      ],
+      providers: [
+        { provide: HttpClient, useValue: httpSpy },
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        LocalForecastComponent,
       ],
     }).compileComponents();
   }));
@@ -30,6 +47,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('weather-app app is running!');
+    expect(compiled.querySelector('h1').textContent).toContain('Your Local Weather Forecast');
   });
 });

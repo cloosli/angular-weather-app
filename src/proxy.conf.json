@@ -1,0 +1,11 @@
+{
+    "/api": {
+        "target": "https://warm-retreat-51656.herokuapp.com/",
+        "secure": true,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/api": ""
+        },
+        "logLevel": "debug"
+    }
+}

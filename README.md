@@ -31,3 +31,12 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ### Set the API Key in the Functions Environment
 
 `firebase functions:config:set openweatherapi.key="YOUR_OPEN_WEATHER_API_KEY"`
+
+## Backend
+
+[Heroku](https://dashboard.heroku.com/apps)
+[OpenWeatherMap](https://home.openweathermap.org/)
+
+
+## TODO
+- [X] Map icons https://openweathermap.org/weather-conditions#How-to-get-icon-URL

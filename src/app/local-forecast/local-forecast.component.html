@@ -1,1 +1,25 @@
-<p>local-forecast works!</p>
+<h1>
+    <i class="wi wi-barometer"></i> Your Local Weather Forecast
+</h1>
+
+<p>Current Position: {{ lat }} / {{ lng }} </p>
+
+<button (click)="getForecast()">Get Forecast</button>
+
+<h1>Seven Day Forecast <span *ngIf="forecast as f">for {{ f.city.name }}, {{f.city.country}}</span></h1>
+
+<p *ngIf="loading">Loading Weather Forecasts</p>
+
+<div *ngIf="forecast as f" class="columns">
+
+    <div *ngFor="let day of f.list" class="column">
+
+        <h3>{{ day.dt * 1000 | date: 'MMM d'  }}</h3>
+        <i [class]="weatherIcon(day.weather[0].icon)"></i>
+        <h4><span>{{ day.temp.min | number:'1.0-1' }}°</span>&nbsp;
+            <span>{{ day.temp.max|number:'1.0-0' }}°</span></h4>
+        <p>{{ day.weather[0].main }}</p>
+        <p>{{ day.weather[0].description }}</p>
+
+    </div>
+</div>

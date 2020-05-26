@@ -1,25 +1,41 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { LocalForecastComponent } from './local-forecast.component';
+import { WeatherService } from '../weather.service';
+import { asyncData } from 'testing/async-observable-helpers';
 
 describe('LocalForecastComponent', () => {
   let component: LocalForecastComponent;
   let fixture: ComponentFixture<LocalForecastComponent>;
+  let weatherSpy;
 
   beforeEach(async(() => {
+    weatherSpy = jasmine.createSpyObj('WeatherService', ['getCurrentForecast']);
+    weatherSpy.getCurrentForecast.and.returnValue(asyncData({}));
+
     TestBed.configureTestingModule({
-      declarations: [ LocalForecastComponent ]
+      declarations: [LocalForecastComponent],
+      providers: [
+        { provide: WeatherService, useValue: weatherSpy }
+      ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LocalForecastComponent);
     component = fixture.componentInstance;
+    spyOn(component, 'isGeoLocationAvailable').and.returnValue(true);
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', fakeAsync(() => {
+    spyOn(navigator.geolocation, "getCurrentPosition").and.callFake(function () {
+      var position = { coords: { latitude: 50, longitude: -100 } };
+      arguments[0](position);
+    });
+
     expect(component).toBeTruthy();
-  });
+    tick();
+  }));
 });
