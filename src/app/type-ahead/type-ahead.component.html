@@ -1,0 +1,12 @@
+<p>Start typing!</p>
+<input (keyup)="onKeyUp($event)" class="input" placeholder="Search city...">
+
+<ng-container *ngIf="results$ | async as results">
+    <p>Result</p>
+
+    <ul>
+        <li *ngFor="let city of results" class="card" (click)="handleClick(city)">
+            <p>{{city.name}}, {{city.country}}</p>
+        </li>
+    </ul>
+</ng-container>

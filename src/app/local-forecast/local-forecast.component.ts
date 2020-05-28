@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { WeatherService } from '../weather.service';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
@@ -18,19 +18,16 @@ export class LocalForecastComponent implements OnInit {
 
   constructor(private weather: WeatherService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  loadGeoLocation() {
     if (this.isGeoLocationAvailable()) {
       navigator.geolocation.getCurrentPosition(position => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
 
         this.getForecast();
-      }, (err) => console.error(err), { timeout: 2 * 1000 });
-    } else {
-      /// default coords
-      this.lat = 40.73;
-      this.lng = -73.93;
-      this.getForecast();
+      }, (err) => console.error(err), { timeout: 5 * 1000 });
     }
   }
 
@@ -85,4 +82,10 @@ export class LocalForecastComponent implements OnInit {
     }
   }
 
+  handleCity(city) {
+    this.lat = city.coord.lat;
+    this.lng = city.coord.lon;
+    this.forecast = null;
+    this.getForecast();
+  }
 }

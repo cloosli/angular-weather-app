@@ -19,11 +19,7 @@ export class WeatherService {
       throw Error('invalid arguments');
     }
     const id = `forecast_${Math.abs(lat + lng)}`;
-    const cache = localStorage.getItem(id);
 
-    if (!!cache) {
-      return of(JSON.parse(cache));
-    }
     let params = new HttpParams();
     params = params.set('lat', lat.toString());
     params = params.set('lng', lng.toString());
@@ -31,12 +27,6 @@ export class WeatherService {
     return this.http.get<ForecastResponse>(this.ROOT_URL, { params })
       .pipe(
         timeout(12 * 1000),
-        tap(data => this.updateLocalStorage(id, data))
       );
-  }
-
-  updateLocalStorage(id: string, forecasts: ForecastResponse) {
-    console.log('update cache');
-    localStorage.setItem(id, JSON.stringify(forecasts));
   }
 }

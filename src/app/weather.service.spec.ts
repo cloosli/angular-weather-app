@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 
 import { WeatherService } from './weather.service';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
 import { asyncData } from 'testing/async-observable-helpers';
 import { ForecastResponse } from './models';
 
@@ -22,7 +21,6 @@ describe('WeatherService', () => {
       ]
     });
     service = TestBed.inject(WeatherService);
-    localStorage.clear();
   });
 
   it('should be created', () => {

@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "fireship-bee81"
+  },
+  "targets": {
+    "fireship-bee81": {
+      "hosting": {
+        "weather-app": [
+          "fireship-bee81"
+        ]
+      }
+    }
   }
 }

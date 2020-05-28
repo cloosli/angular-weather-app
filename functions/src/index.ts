@@ -1,4 +1,7 @@
 import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+admin.initializeApp();
+
 const http = require('requestify');
 const cors = require('cors')({ origin: true });
 
@@ -28,4 +31,36 @@ function formatUrl(lat: any, lng: any) {
     console.log(apiKey)
 
     return `https://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lng}&cnt=7&appid=${apiKey}`
+}
+
+exports.updateIndex = functions.firestore
+    .document('ow_citylist/{cityId}')
+    .onCreate((snap, context) => {
+
+        const cityId = context.params.cityId;
+        const city: any = snap.data();
+
+        const searchableIndex = createIndex(city.name)
+
+        const indexedCity = { ...city, searchableIndex }
+
+        const db = admin.firestore()
+
+        return db.collection('ow_citylist').doc(cityId).set(indexedCity, { merge: true })
+
+    })
+
+function createIndex(title: string) {
+    const arr = title.toLowerCase().split('');
+    const searchableIndex: any = {}
+
+    let prevKey = '';
+
+    for (const char of arr) {
+        const key = prevKey + char;
+        searchableIndex[key] = true
+        prevKey = key
+    }
+
+    return searchableIndex
 }
