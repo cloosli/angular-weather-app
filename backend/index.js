@@ -34,7 +34,7 @@ const weahterForecastProxy = (request, response) => {
 };
 
 express()
-    //.use(cors(corsOptions))
+    .use(cors(corsOptions))
     .get('/', (req, res) => res.send('<h1>Status: OK</h1>'))
     .get('/forecast', weahterForecastProxy)
     .listen(PORT, () => console.log(`Listening on ${PORT}`))
