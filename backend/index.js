@@ -5,7 +5,7 @@ const path = require('path')
 const PORT = process.env.PORT || 5000
 const API_KEY = process.env.WEATHER_APP_API
 
-var whitelist = ['https://warm-retreat-51656.herokuapp.com',]
+var whitelist = ['https://warm-retreat-51656.herokuapp.com', 'https://weather-chl.web.app']
 var corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
