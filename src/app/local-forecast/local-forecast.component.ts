@@ -15,6 +15,7 @@ export class LocalForecastComponent implements OnInit {
   lng: number;
   forecast: ForecastResponse;
   loading = false;
+  loadingLocation = false;
 
   constructor(private weather: WeatherService) { }
 
@@ -22,12 +23,16 @@ export class LocalForecastComponent implements OnInit {
 
   loadGeoLocation() {
     if (this.isGeoLocationAvailable()) {
+      this.loadingLocation = true;
       navigator.geolocation.getCurrentPosition(position => {
         this.lat = position.coords.latitude;
         this.lng = position.coords.longitude;
-
+        this.loadingLocation = false;
         this.getForecast();
-      }, (err) => console.error(err), { timeout: 5 * 1000 });
+      }, (err) => {
+        this.loadingLocation = false;
+        console.error(err), { timeout: 5 * 1000 }
+      });
     }
   }
 
@@ -52,7 +57,7 @@ export class LocalForecastComponent implements OnInit {
     switch (icon) {
       // clear sky
       case '01d': return 'wi wi-day-sunny';
-      case '01n': return 'wi wi-night-sunny';
+      case '01n': return 'wi wi-night-clear';
       // few clouds
       case '02d': return 'wi wi-day-sunny-overcast';
       case '02n': return 'wi wi-night-sunny-overcast';

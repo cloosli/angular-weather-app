@@ -1,8 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { filter, switchMap, tap, } from 'rxjs/operators';
+import { filter, switchMap, tap, startWith, map, debounceTime, distinctUntilChanged, } from 'rxjs/operators';
 import { City } from '../models';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -11,35 +12,33 @@ import { City } from '../models';
   styleUrls: ['./type-ahead.component.scss']
 })
 export class TypeAheadComponent implements OnInit {
-  results$: Observable<City[]>;
-  offset$ = new Subject<string>();
 
   @Output() city: EventEmitter<any> = new EventEmitter();
 
+  filteredOptions$: Observable<City[]>;
+  inputFormControl: FormControl;
+
+  option: City;
 
   constructor(private afs: AngularFirestore) { }
 
   ngOnInit(): void {
-    this.results$ = this.search();
-  }
+    this.inputFormControl = new FormControl();
 
-  onKeyUp(event) {
-    this.offset$.next(event.target.value.toLowerCase());
-  }
-
-  search() {
-    return this.offset$.pipe(
-      filter(val => !!val),
-      switchMap(val => {
-        const start = val;
-        console.log(start);
-        const end = start + '\uf8ff';
-        return this.afs.collection<City>('ow_citylist', ref => ref
-          .orderBy(`searchableIndex.${val}`).limit(5)
-        )
-          .valueChanges()
-      }),
-    );
+    this.filteredOptions$ = this.inputFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        filter(text => !!text && text.length >= 3),
+        map(text => text.toLowerCase()),
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(text => {
+          return this.afs.collection<City>('ow_citylist', ref => ref
+            .orderBy(`searchableIndex.${text}`).limit(5)
+          )
+            .valueChanges()
+        }),
+      );
   }
 
   handleClick(city) {

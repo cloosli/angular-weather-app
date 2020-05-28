@@ -1,28 +1,34 @@
-<h1>
-    <i class="wi wi-barometer"></i> Your Local Weather Forecast
-</h1>
+<div class="local-forecast__location">
 
-<div class="local-forecast_geo-location">
-    <button (click)="loadGeoLocation()">Get Current Location</button>
-    <p>Current Position: {{ lat }} / {{ lng }} </p>
-</div>
+    <app-type-ahead #typeahead (city)="handleCity($event)"></app-type-ahead>
 
-<app-type-ahead #typeahead (city)="handleCity($event)"></app-type-ahead>
+    <p class="local-forecast__spacer">or</p>
 
-<h1>Seven Day Forecast <span *ngIf="forecast as f">for {{ f.city.name }}, {{f.city.country}}</span></h1>
-
-<p *ngIf="loading">Loading Weather Forecasts</p>
-
-<div *ngIf="forecast as f" class="columns">
-
-    <div *ngFor="let day of f.list" class="column">
-
-        <h3>{{ day.dt * 1000 | date: 'MMM d'  }}</h3>
-        <i [class]="weatherIcon(day.weather[0].icon)"></i>
-        <h4><span>{{ day.temp.min | number:'1.0-0' }}°</span>&nbsp;
-            <span>{{ day.temp.max|number:'1.0-0' }}°</span></h4>
-        <p>{{ day.weather[0].main }}</p>
-        <p>{{ day.weather[0].description }}</p>
-
+    <div class="local-forecast__geo-location">
+        <button (click)="loadGeoLocation()" nbButton size="small" [nbSpinner]="loadingLocation"
+            [disabled]="loadingLocation">
+            <nb-icon icon="pin" status="warning"></nb-icon>
+            Get Current Location
+        </button>
     </div>
 </div>
+
+<main class="local-forecast__forecasts">
+    <h1 *ngIf="forecast as f">Seven Day Forecast <span>for {{ f.city.name }}, {{f.city.country}}</span></h1>
+
+    <p *ngIf="loading" [nbSpinner]="loading" nbSpinnerStatus="info">Loading Weather Forecasts</p>
+
+    <div *ngIf="forecast as f" class="columns">
+
+        <div *ngFor="let day of f.list" class="column">
+
+            <h3>{{ day.dt * 1000 | date: 'MMM d'  }}</h3>
+            <i [class]="weatherIcon(day.weather[0].icon)"></i>
+            <h4><span>{{ day.temp.min | number:'1.0-0' }}°</span>&nbsp;
+                <span>{{ day.temp.max|number:'1.0-0' }}°</span></h4>
+            <p>{{ day.weather[0].main }}</p>
+            <p>{{ day.weather[0].description }}</p>
+
+        </div>
+    </div>
+</main>

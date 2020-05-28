@@ -1,12 +1,11 @@
-<p>Start typing!</p>
-<input (keyup)="onKeyUp($event)" class="input" placeholder="Search city...">
+<input [formControl]="inputFormControl" nbInput type="text" placeholder="Enter City" [nbAutocomplete]="auto" />
 
-<ng-container *ngIf="results$ | async as results">
-    <p>Result</p>
+<nb-autocomplete #auto [activeFirst]="true">
 
-    <ul>
-        <li *ngFor="let city of results" class="card" (click)="handleClick(city)">
-            <p>{{city.name}}, {{city.country}}</p>
-        </li>
-    </ul>
-</ng-container>
+    <nb-option *ngFor="let city of filteredOptions$ | async" [value]="option" (click)="handleClick(city)">
+        {{city.name}}, {{city.country}}
+    </nb-option>
+
+    {{option}}
+
+</nb-autocomplete>
