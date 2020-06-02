@@ -36,7 +36,7 @@ export class TypeAheadComponent implements OnInit {
           return this.afs.collection<City>('ow_citylist', ref => ref
             .orderBy(`searchableIndex.${text}`).limit(5)
           )
-            .valueChanges()
+            .valueChanges();
         }),
       );
   }

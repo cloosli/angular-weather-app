@@ -6,14 +6,17 @@ import { AppComponent } from './app.component';
 import { LocalForecastComponent } from './local-forecast/local-forecast.component';
 import { WeatherService } from './weather.service';
 import { HttpClientModule } from '@angular/common/http';
-import { TypeAheadComponent } from './type-ahead/type-ahead.component'
+import { TypeAheadComponent } from './type-ahead/type-ahead.component';
 
 import { environment } from '../environments/environment';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NbThemeModule, NbLayoutModule, NbAutocompleteModule, NbButtonModule, NbCardModule, NbInputModule, NbIconModule, NbSpinnerModule } from '@nebular/theme';
+import {
+  NbThemeModule, NbLayoutModule, NbAutocompleteModule, NbButtonModule,
+  NbInputModule, NbIconModule, NbSpinnerModule
+} from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

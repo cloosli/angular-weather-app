@@ -30,9 +30,8 @@ describe('LocalForecastComponent', () => {
   });
 
   it('should create', fakeAsync(() => {
-    spyOn(navigator.geolocation, "getCurrentPosition").and.callFake(function () {
-      var position = { coords: { latitude: 50, longitude: -100 } };
-      arguments[0](position);
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake(() => {
+      return { coords: { latitude: 50, longitude: -100 } };
     });
 
     expect(component).toBeTruthy();

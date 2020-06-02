@@ -11,10 +11,9 @@ describe('AppComponent', () => {
   let httpSpy;
   beforeEach(async(() => {
     httpSpy = jasmine.createSpyObj('HttpClient', ['get']);
-    httpSpy.get.and.returnValue(asyncData({ city: { name: 'La Paz' } } as ForecastResponse))
-    spyOn(navigator.geolocation, "getCurrentPosition").and.callFake(function () {
-      var position = { coords: { latitude: 33, longitude: -26 } };
-      arguments[0](position);
+    httpSpy.get.and.returnValue(asyncData({ city: { name: 'La Paz' } } as ForecastResponse));
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake(() => {
+      return { coords: { latitude: 33, longitude: -26 } };
     });
 
     TestBed.configureTestingModule({
