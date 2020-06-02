@@ -31,8 +31,8 @@ export class LocalForecastComponent implements OnInit {
         this.getForecast();
       }, (err) => {
         this.loadingLocation = false;
-        console.error(err), { timeout: 5 * 1000 }
-      });
+        console.error(err);
+      }, { timeout: 5 * 1000 });
     }
   }
 
@@ -51,7 +51,7 @@ export class LocalForecastComponent implements OnInit {
   }
 
   /// Helper to make weather icons work
-  /// better solution is to map icons to an object 
+  /// better solution is to map icons to an object
   weatherIcon(icon: string) {
 
     switch (icon) {
@@ -83,7 +83,7 @@ export class LocalForecastComponent implements OnInit {
       case '50d': return 'wi wi-day-fog';
       case '50n': return 'wi wi-night-fog';
       default:
-        return `wi wi-day-sunny`
+        return `wi wi-day-sunny`;
     }
   }
 
