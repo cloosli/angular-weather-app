@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
+[Demo Website](https://weather-chl.web.app/)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -38,9 +40,16 @@ Run `ng deploy`to build and deploy the project.
 
 ## Backend
 
-[Heroku](https://dashboard.heroku.com/apps)
-[OpenWeatherMap](https://home.openweathermap.org/)
+- [Heroku](https://dashboard.heroku.com/apps)
+- [OpenWeatherMap](https://home.openweathermap.org/)
+- [WeatherApp](https://weather-chl.web.app/)
 
+To deploy the project on Heroku, navigate into the backend directory `cd backend/`.
+Run `npm run publishheroku` to build and deploy the backend.
 
 ## TODO
 - [X] Map icons https://openweathermap.org/weather-conditions#How-to-get-icon-URL
+
+## Links
+[WeatherApp](https://weather-chl.web.app/)
+[GitHub](https://github.com/cloosli/angular-weather-app)
